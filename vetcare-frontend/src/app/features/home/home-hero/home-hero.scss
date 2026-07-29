@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.hero {
+  /* Same treatment as the hero slide backgrounds in the design system:
+     a diagonal dark-to-lighter forest gradient with a subtle gold glow
+     (rgba below is --gold-500, #c9a227, in rgb form for the radial-gradient stop). */
+  background: radial-gradient(circle at 82% 30%, rgba(201, 162, 39, 0.18), transparent 50%),
+    linear-gradient(120deg, var(--forest-950), var(--forest-700) 100%);
+}
+
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 36px 20px 40px;
+}
+
+.hero-head {
+  text-align: center;
+  margin-bottom: 28px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--cream-50);
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: rgba(241, 234, 217, 0.75);
+  }
+}
+
+.hero-quick-search {
+  margin-top: 32px;
+}
+
+@media (min-width: 640px) {
+  .wrap {
+    padding: 48px 28px 52px;
+  }
+
+  .hero-head h1 {
+    font-size: 36px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-head h1 {
+    font-size: 44px;
+  }
+
+  .hero-head p {
+    font-size: 16px;
+  }
+}

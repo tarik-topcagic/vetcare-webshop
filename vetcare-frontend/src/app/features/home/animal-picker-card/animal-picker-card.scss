@@ -1,0 +1,64 @@
+:host {
+  /* Block + min-width: 0 so this grid item sizes to its assigned column
+     track instead of growing to fit the img's width/height attributes
+     (a common CSS Grid min-content gotcha with sized <img> elements). */
+  display: block;
+  min-width: 0;
+}
+
+.animal-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--cream-50);
+  border: 1px solid var(--gold-600);
+  border-radius: 6px;
+  padding: 14px 12px 18px;
+  text-align: center;
+  min-height: 44px;
+  min-width: 0;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold-500);
+    box-shadow: 0 12px 24px rgba(10, 32, 21, 0.28);
+  }
+
+  .photo {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .name {
+    /* Work Sans (the site's UI/body font) instead of the Fraunces display
+       serif - matches how product card names are styled elsewhere and
+       reads more natural at this small, friendly card size. */
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14.5px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--forest-800);
+  }
+
+  .cta {
+    margin-top: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold-700);
+  }
+}

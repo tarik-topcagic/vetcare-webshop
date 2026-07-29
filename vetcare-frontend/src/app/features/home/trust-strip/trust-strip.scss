@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.trust {
+  background: var(--cream-100);
+  border-bottom: 1px solid var(--line);
+}
+
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 700px) {
+  .wrap {
+    padding: 0 28px;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

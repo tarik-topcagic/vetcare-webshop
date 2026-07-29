@@ -1,0 +1,7 @@
+<nav class="catnav" aria-label="Kategorije proizvoda">
+  <div class="wrap">
+    @for (cat of categories; track cat.slug) {
+      <a [href]="categoryHref(cat.slug)">{{ cat.label }}</a>
+    }
+  </div>
+</nav>

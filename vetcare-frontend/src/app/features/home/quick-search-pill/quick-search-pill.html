@@ -1,0 +1,23 @@
+<a class="pill" [href]="href">
+  @switch (icon) {
+    @case ('bottle') {
+      <svg viewBox="0 0 24 24" stroke-width="1.6" fill="none" stroke="currentColor" aria-hidden="true">
+        <path d="M9 2h6v4l2 2v12a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V8l2-2V2z"/>
+        <line x1="7" y1="14" x2="17" y2="14"/>
+      </svg>
+    }
+    @case ('drop') {
+      <svg viewBox="0 0 24 24" stroke-width="1.6" fill="none" stroke="currentColor" aria-hidden="true">
+        <path d="M12 2s7 7.5 7 12.5a7 7 0 0 1-14 0C5 9.5 12 2 12 2z"/>
+      </svg>
+    }
+    @case ('box') {
+      <svg viewBox="0 0 24 24" stroke-width="1.6" fill="none" stroke="currentColor" aria-hidden="true">
+        <rect x="3" y="7" width="18" height="13" rx="1"/>
+        <path d="M3 7l9-4 9 4"/>
+        <path d="M12 3v4"/>
+      </svg>
+    }
+  }
+  <span>{{ label }}</span>
+</a>

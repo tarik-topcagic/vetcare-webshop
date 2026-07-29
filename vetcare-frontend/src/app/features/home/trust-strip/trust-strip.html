@@ -1,0 +1,7 @@
+<section class="trust">
+  <div class="wrap">
+    @for (badge of badges; track badge.title) {
+      <app-trust-badge [icon]="badge.icon" [title]="badge.title" [subtitle]="badge.subtitle" />
+    }
+  </div>
+</section>

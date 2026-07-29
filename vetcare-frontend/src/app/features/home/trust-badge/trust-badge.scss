@@ -1,0 +1,44 @@
+:host {
+  /* The grid item should be the .trust-item div itself, not this wrapper -
+     matches the pattern used by app-quick-search-pill. */
+  display: contents;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px;
+  border-right: 1px solid var(--line);
+  min-height: 44px;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--gold-700);
+    fill: none;
+    flex: none;
+  }
+
+  b {
+    display: block;
+    font-size: 13.5px;
+    color: var(--forest-800);
+  }
+
+  span {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+}
+
+@media (max-width: 700px) {
+  .trust-item {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+  }
+}

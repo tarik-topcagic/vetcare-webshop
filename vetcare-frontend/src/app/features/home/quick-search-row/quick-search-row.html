@@ -1,0 +1,10 @@
+<div class="quick-search">
+  <h2>Brza pretraga po namjeni</h2>
+  <ul class="pill-list">
+    @for (pill of pills; track pill.slug) {
+      <li>
+        <app-quick-search-pill [label]="pill.label" [slug]="pill.slug" [icon]="pill.icon" />
+      </li>
+    }
+  </ul>
+</div>

@@ -1,1 +1,98 @@
-/* You can add global styles to this file, and also import other style files */
+/* Design tokens ported from vetcare-webshop.html (the approved design system). */
+:root {
+  --forest-950: #0a2015;
+  --forest-800: #123726;
+  --forest-700: #1b4a34;
+  --forest-600: #245c41;
+  --gold-600: #a8811d;
+  /* Darker than --gold-600 specifically for small text on light (cream)
+     backgrounds - --gold-600 only reaches ~3.4:1 there, below WCAG AA. */
+  --gold-700: #7a5c14;
+  --gold-500: #c9a227;
+  --gold-300: #e2c66c;
+  --cream-50: #faf7ef;
+  --cream-100: #f1ead9;
+  --ink: #16241b;
+  --ink-soft: #4a5c4e;
+  --line: rgba(18, 55, 38, 0.14);
+  --radius: 2px;
+  --sale: #a8432c;
+
+  /* Measured rendered heights of the sticky header bars, used to stack
+     them without overlap (see layout/header and layout/category-nav).
+     Re-measure and update these if either bar's content/padding changes. */
+  --utilbar-height: 31px;
+  --header-height: 76px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream-50);
+  color: var(--ink);
+  font-family: 'Work Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Fraunces', serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+::selection {
+  background: var(--gold-300);
+  color: var(--forest-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}

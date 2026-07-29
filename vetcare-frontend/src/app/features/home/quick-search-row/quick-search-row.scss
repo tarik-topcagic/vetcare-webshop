@@ -1,0 +1,22 @@
+:host {
+  display: block;
+}
+
+.quick-search {
+  text-align: center;
+}
+
+h2 {
+  font-family: 'Work Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cream-50);
+  margin-bottom: 16px;
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}

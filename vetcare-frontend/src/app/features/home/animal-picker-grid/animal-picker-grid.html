@@ -1,0 +1,7 @@
+<ul class="animal-grid">
+  @for (animal of animals; track animal.slug) {
+    <li>
+      <app-animal-picker-card [name]="animal.name" [slug]="animal.slug" [image]="animal.image" />
+    </li>
+  }
+</ul>

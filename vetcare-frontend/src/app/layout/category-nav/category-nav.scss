@@ -1,0 +1,58 @@
+:host {
+  /* See the identical comment in layout/header/header.scss: display:
+     contents so this sticky nav's containing block is the full-page
+     app-root, not this tightly content-sized host element. */
+  display: contents;
+}
+
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+.catnav {
+  background: var(--forest-950);
+  border-bottom: 1px solid var(--gold-600);
+  position: sticky;
+  /* Stack below the sticky utility bar + header (only relevant ≥921px -
+     this rule is a no-op below that since the nav is display:none there). */
+  top: calc(var(--utilbar-height) + var(--header-height));
+  z-index: 60;
+
+  .wrap {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  a {
+    padding: 14px 16px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    font-weight: 500;
+    color: rgba(241, 234, 217, 0.72);
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+
+    &:hover,
+    &.active {
+      color: var(--gold-300);
+      border-bottom-color: var(--gold-500);
+    }
+  }
+
+  @media (max-width: 920px) {
+    display: none;
+  }
+}

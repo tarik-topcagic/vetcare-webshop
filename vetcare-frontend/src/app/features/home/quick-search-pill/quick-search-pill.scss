@@ -1,0 +1,30 @@
+:host {
+  display: contents;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1.5px solid var(--gold-500);
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--gold-300);
+  background: rgba(226, 198, 108, 0.05);
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(226, 198, 108, 0.14);
+    border-color: var(--gold-300);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+  }
+}

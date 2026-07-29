@@ -1,0 +1,34 @@
+:host {
+  display: block;
+}
+
+/* Mobile-first: 2 columns reads cleanly on real phone widths and keeps every
+   animal visible without requiring a swipe to discover the rest. */
+.animal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+
+  li {
+    display: contents;
+  }
+}
+
+@media (min-width: 600px) {
+  .animal-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (min-width: 860px) {
+  .animal-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1120px) {
+  .animal-grid {
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
