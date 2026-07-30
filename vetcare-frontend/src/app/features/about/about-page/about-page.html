@@ -1,0 +1,71 @@
+<article class="about-page">
+  <div class="wrap">
+    <h1>O nama</h1>
+    <p class="lede">Dobro došli u Veterinarsku apoteku Vetcare d.o.o.</p>
+
+    <p>
+      Vetcare d.o.o. je specijalizirana veterinarska apoteka sa sjedištem u Cazinu, osnovana s
+      ciljem da vlasnicima kućnih ljubimaca, farmerima i veterinarskim stručnjacima pruži
+      kvalitetne proizvode, stručne savjete i pouzdanu podršku u očuvanju zdravlja životinja.
+    </p>
+
+    <p>
+      Iza Vetcarea stoji doktor veterinarske medicine s praktičnim iskustvom u radu s malim i
+      velikim životinjama. Zahvaljujući stručnom znanju i svakodnevnom radu u veterinarskoj
+      praksi, pažljivo biramo proizvode koji zadovoljavaju visoke standarde kvaliteta,
+      sigurnosti i učinkovitosti.
+    </p>
+
+    <p>Naša ponuda obuhvata proizvode za:</p>
+    <ul class="check-list">
+      @for (item of offerings; track item) {
+        <li>
+          <svg viewBox="0 0 24 24" stroke-width="2.2" fill="none" stroke="currentColor" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+          <span>{{ item }}</span>
+        </li>
+      }
+    </ul>
+
+    <p>
+      Pored veterinarskih lijekova i dodataka ishrani, nudimo preparate za higijenu, njegu,
+      dezinfekciju, zaštitu od parazita, vitaminsko-mineralne dodatke, opremu te mnoge druge
+      proizvode potrebne za svakodnevnu brigu o životinjama.
+    </p>
+
+    <h2>Naša misija</h2>
+    <p>
+      Naša misija je omogućiti brz pristup provjerenim veterinarskim proizvodima uz stručan
+      savjet i profesionalnu uslugu. Vjerujemo da pravilna prevencija i kvalitetna njega
+      predstavljaju osnovu zdravlja i dobrobiti svake životinje.
+    </p>
+
+    <h2>Naša vizija</h2>
+    <p>
+      Želimo postati jedno od najprepoznatljivijih imena u veterinarskoj djelatnosti u Bosni i
+      Hercegovini te pouzdan partner farmerima, vlasnicima kućnih ljubimaca i veterinarima.
+      Kontinuirano širimo ponudu, pratimo savremene trendove i uvodimo proizvode renomiranih
+      svjetskih proizvođača kako bismo našim kupcima uvijek ponudili najbolja rješenja.
+    </p>
+
+    <h2>Zašto odabrati Vetcare?</h2>
+    <ul class="check-list">
+      @for (item of whyChoose; track item) {
+        <li>
+          <svg viewBox="0 0 24 24" stroke-width="2.2" fill="none" stroke="currentColor" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5"/>
+          </svg>
+          <span>{{ item }}</span>
+        </li>
+      }
+    </ul>
+
+    <h2>Naša vrijednost</h2>
+    <p>
+      U Vetcareu vjerujemo da svaki kupac zaslužuje jednaku pažnju, bilo da brine o jednom
+      kućnom ljubimcu ili vodi veliku farmu. Zato svakom upitu pristupamo odgovorno, stručno i
+      s ciljem da pronađemo najbolje rješenje.
+    </p>
+  </div>
+</article>
