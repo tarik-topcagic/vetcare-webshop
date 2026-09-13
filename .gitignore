@@ -1,0 +1,13 @@
+# Raw working inputs (source Word docs, dedup analysis, reference images) -
+# not application source, never needed at runtime.
+raw_podaci/
+
+# Raw product photo folders at the project root - source images awaiting
+# processing/matching, not app assets. The app's actual served images live
+# under vetcare-frontend/public/ and vetcare-frontend/src/assets/.
+krava/
+kreme-gelovi/
+MACKE/
+ovce/
+pas/
+perad/
