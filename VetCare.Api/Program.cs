@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
+using VetCare.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +17,16 @@ builder.Services.AddResponseCompression(options =>
     options.EnableForHttps = true;
 });
 
+builder.Services.AddDbContext<VetCareDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<VetCareDbContext>();
+    await DbSeeder.SeedCategoriesAsync(db);
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -40,6 +52,32 @@ app.UseStaticFiles(new StaticFileOptions
         headers.CacheControl = ctx.File.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase)
             ? new CacheControlHeaderValue { NoCache = true }
             : new CacheControlHeaderValue { Public = true, MaxAge = TimeSpan.FromDays(365), Extensions = { new NameValueHeaderValue("immutable") } };
+    },
+});
+
+// Product photos. Deliberately NOT under wwwroot: `ng build` wipes wwwroot's
+// contents on every deploy, which would delete these. The folder path is
+// configurable (ProductImages:Path / PRODUCTIMAGES__PATH) so production can
+// point it at a persistent disk instead of the app's own directory.
+var productImagesPath = Path.GetFullPath(Path.Combine(
+    app.Environment.ContentRootPath,
+    builder.Configuration["ProductImages:Path"] ?? "product-images"));
+Directory.CreateDirectory(productImagesPath);
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(productImagesPath),
+    RequestPath = "/product-images",
+    OnPrepareResponse = ctx =>
+    {
+        // Filenames are content-derived (<slug>-<n>.webp) and never reused
+        // for different content, so these are safe to cache indefinitely.
+        var headers = ctx.Context.Response.GetTypedHeaders();
+        headers.CacheControl = new CacheControlHeaderValue
+        {
+            Public = true,
+            MaxAge = TimeSpan.FromDays(365),
+            Extensions = { new NameValueHeaderValue("immutable") },
+        };
     },
 });
 
