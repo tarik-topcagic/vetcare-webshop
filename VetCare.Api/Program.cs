@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Net.Http.Headers;
 using VetCare.Api.Data;
+using VetCare.Api.Endpoints;
+using VetCare.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,8 @@ builder.Services.AddResponseCompression(options =>
 
 builder.Services.AddDbContext<VetCareDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ISalePricingService, SalePricingService>();
 
 var app = builder.Build();
 
@@ -85,6 +89,8 @@ var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
+
+app.MapProductEndpoints();
 
 app.MapGet("/api/weatherforecast", () =>
 {
