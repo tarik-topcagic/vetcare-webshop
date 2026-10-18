@@ -1,0 +1,50 @@
+<div class="select" [class.open]="open()">
+  <button
+    #trigger
+    type="button"
+    class="select-trigger"
+    [id]="triggerId"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="open()"
+    [attr.aria-labelledby]="triggerLabelledBy"
+    (click)="toggleOpen()"
+    (keydown)="onTriggerKeydown($event)"
+  >
+    <span class="value">{{ selectedLabel }}</span>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+      <path d="M6 9l6 6 6-6" />
+    </svg>
+  </button>
+
+  @if (open()) {
+    <ul
+      #listbox
+      class="select-panel"
+      role="listbox"
+      [id]="listboxId"
+      [attr.aria-labelledby]="labelledBy"
+      [attr.aria-activedescendant]="activeOptionId"
+      tabindex="-1"
+      (keydown)="onPanelKeydown($event)"
+    >
+      @for (opt of options; track opt.value; let i = $index) {
+        <li
+          [id]="optionId(i)"
+          role="option"
+          [attr.aria-selected]="opt.value === value"
+          [class.active]="i === activeIndex()"
+          [class.selected]="opt.value === value"
+          (click)="selectOption(opt)"
+          (mouseenter)="activeIndex.set(i)"
+        >
+          <span>{{ opt.label }}</span>
+          @if (opt.value === value) {
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" />
+            </svg>
+          }
+        </li>
+      }
+    </ul>
+  }
+</div>
