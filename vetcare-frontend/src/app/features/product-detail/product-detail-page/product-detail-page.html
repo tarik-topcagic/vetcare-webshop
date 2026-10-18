@@ -1,0 +1,142 @@
+@if (loading()) {
+  <div class="wrap">
+    <p class="state-message">Učitavanje...</p>
+  </div>
+} @else if (notFound()) {
+  <div class="wrap">
+    <p class="state-message">
+      Proizvod nije pronađen.
+      <a routerLink="/proizvodi">Pogledajte sve proizvode →</a>
+    </p>
+  </div>
+} @else if (product()) {
+  <div class="wrap">
+    <nav class="breadcrumb" aria-label="Lokacija na sajtu">
+      <a routerLink="/">Početna</a>
+      <span aria-hidden="true">/</span>
+      @if (product()!.categories.length > 0) {
+        <a [routerLink]="['/proizvodi']" [queryParams]="{ category: product()!.categories[0].slug }">
+          {{ product()!.categories[0].name }}
+        </a>
+        <span aria-hidden="true">/</span>
+      }
+      <span>{{ product()!.name }}</span>
+    </nav>
+
+    <div class="detail-layout">
+      <div class="gallery">
+        <div class="main-photo">
+          @if (product()!.imageUrls.length > 0) {
+            <img
+              [src]="product()!.imageUrls[selectedImageIndex()]"
+              [alt]="product()!.name"
+              width="800"
+              height="800"
+              loading="eager"
+              fetchpriority="high"
+            >
+          } @else {
+            <span class="no-image" aria-hidden="true"></span>
+          }
+        </div>
+
+        @if (product()!.imageUrls.length > 1) {
+          <ul class="thumbs">
+            @for (url of product()!.imageUrls; track url; let i = $index) {
+              <li>
+                <button
+                  type="button"
+                  class="thumb-btn"
+                  [class.active]="i === selectedImageIndex()"
+                  [attr.aria-pressed]="i === selectedImageIndex()"
+                  [attr.aria-label]="'Prikaži sliku ' + (i + 1)"
+                  (click)="selectImage(i)"
+                >
+                  <img [src]="url" alt="" width="120" height="120" loading="lazy">
+                </button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <div class="info">
+        @if (product()!.brand) {
+          <p class="brand">{{ product()!.brand }}</p>
+        }
+
+        <h1>{{ product()!.name }}</h1>
+
+        @if (product()!.packageSize) {
+          <span class="package-badge">{{ product()!.packageSize }}</span>
+        }
+
+        <div class="stock-line" [class.unavailable]="isUnavailable()">
+          <span class="dot" aria-hidden="true"></span>
+          {{ isUnavailable() ? 'Nedostupno' : product()!.stockStatus }}
+        </div>
+
+        <div class="price-block">
+          @if (product()!.priceOnRequest) {
+            <p class="price on-request">Na upit</p>
+            <p class="call-us">Pozovite za cijenu: <a [href]="phoneHref">{{ phoneDisplay }}</a></p>
+          } @else {
+            @if (product()!.oldPrice != null) {
+              <span class="old-price">{{ formatPrice(product()!.oldPrice!) }}</span>
+            }
+            <span class="price" [class.sale]="product()!.oldPrice != null">
+              {{ formatPrice(product()!.price!) }}
+            </span>
+          }
+        </div>
+
+        <button
+          type="button"
+          class="add-btn"
+          [disabled]="!canAddToCart()"
+          (click)="onAddToCart()"
+        >
+          {{ addedToCart() ? 'Dodano u korpu ✓' : (isUnavailable() ? 'Nedostupno' : 'Dodaj u korpu') }}
+        </button>
+
+        @if (sortedVariants().length > 0) {
+          <div class="variants">
+            <h2>Varijante</h2>
+            <ul>
+              @for (variant of sortedVariants(); track variant.slug) {
+                <li>
+                  <a [routerLink]="['/proizvodi', variant.slug]" [class.unavailable]="variant.stockStatus === 'Nedostupno'">
+                    <span class="v-size">{{ variant.packageSize || variant.name }}</span>
+                    @if (variant.stockStatus === 'Nedostupno') {
+                      <span class="v-stock">Nedostupno</span>
+                    } @else if (variant.price != null) {
+                      <span class="v-price">{{ formatPrice(variant.price) }}</span>
+                    }
+                  </a>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+
+    <section class="description-section">
+      <h2>Opis proizvoda</h2>
+      <app-description [text]="product()!.description" />
+    </section>
+
+    @if (related().length > 0) {
+      <section class="related-section">
+        <h2>Slični proizvodi</h2>
+        <ul class="related-grid">
+          @for (item of related(); track item.id) {
+            <li>
+              <app-product-card [product]="item" />
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </div>
+}

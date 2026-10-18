@@ -1,0 +1,69 @@
+<div class="wrap">
+  <nav class="breadcrumb" aria-label="Lokacija na sajtu">
+    <a routerLink="/">Početna</a>
+    <span aria-hidden="true">/</span>
+    <span>{{ pageTitle() }}</span>
+  </nav>
+
+  <div class="catalog-head">
+    <h1>{{ pageTitle() }}</h1>
+
+    <div class="catalog-subhead">
+      @if (result() && !loading()) {
+        <p class="result-count">{{ result()!.totalCount }} proizvoda</p>
+      }
+
+      <div class="sort-field">
+        <span class="sort-label" id="sortLabel">Sortiraj:</span>
+        <app-select
+          [options]="sortOptions"
+          [value]="currentSort()"
+          labelledBy="sortLabel"
+          (valueChange)="onSortChange($event)"
+        />
+      </div>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <ul class="product-grid" aria-busy="true" aria-label="Učitavanje proizvoda">
+      @for (_ of skeletonRows; track $index) {
+        <li class="skeleton-card" aria-hidden="true">
+          <span class="sk-body">
+            <span class="sk-photo"></span>
+            <span class="sk-block sk-brand"></span>
+            <span class="sk-block sk-name"></span>
+            <span class="sk-block sk-badge"></span>
+            <span class="sk-block sk-stock"></span>
+            <span class="sk-block sk-price"></span>
+          </span>
+          <span class="sk-btn"></span>
+        </li>
+      }
+    </ul>
+  } @else if (errored()) {
+    <p class="state-message">Greška pri učitavanju proizvoda. Pokušajte ponovo.</p>
+  } @else if (result() && result()!.items.length === 0) {
+    <p class="state-message">Nema proizvoda.</p>
+  } @else if (result()) {
+    <ul class="product-grid">
+      @for (product of result()!.items; track product.id; let i = $index) {
+        <li>
+          <app-product-card [product]="product" [imgPriority]="i < 4" />
+        </li>
+      }
+    </ul>
+
+    @if (totalPages() > 1) {
+      <nav class="pagination" aria-label="Stranice">
+        <button type="button" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() <= 1">
+          ← Prethodna
+        </button>
+        <span>Stranica {{ currentPage() }} od {{ totalPages() }}</span>
+        <button type="button" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() >= totalPages()">
+          Sljedeća →
+        </button>
+      </nav>
+    }
+  }
+</div>

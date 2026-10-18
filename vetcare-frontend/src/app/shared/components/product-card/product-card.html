@@ -1,0 +1,54 @@
+<a class="card-link" [routerLink]="['/proizvodi', product.slug]">
+  <span class="photo">
+    @if (product.mainImageUrl) {
+      <img
+        [src]="product.mainImageUrl"
+        [alt]="product.name"
+        width="300"
+        height="300"
+        [attr.loading]="imgPriority ? 'eager' : 'lazy'"
+        [attr.fetchpriority]="imgPriority ? 'high' : null"
+      >
+    } @else {
+      <span class="no-image" aria-hidden="true"></span>
+    }
+    @if (isUnavailable) {
+      <span class="stock-flag">Nedostupno</span>
+    }
+  </span>
+
+  <span class="brand">{{ product.brand }}</span>
+
+  <span class="name" [title]="product.name">{{ product.name }}</span>
+
+  <span class="badge-slot">
+    @if (product.packageSize) {
+      <span class="package-badge">{{ product.packageSize }}</span>
+    }
+  </span>
+
+  <span class="stock-status" [class.unavailable]="isUnavailable">
+    <span class="dot" aria-hidden="true"></span>
+    {{ product.stockStatus }}
+  </span>
+
+  <span class="price-row">
+    @if (product.priceOnRequest) {
+      <span class="price on-request">Pozovite za cijenu</span>
+    } @else {
+      @if (product.oldPrice != null) {
+        <span class="old-price">{{ formatPrice(product.oldPrice) }}</span>
+      }
+      <span class="price" [class.sale]="product.oldPrice != null">{{ formatPrice(product.price!) }}</span>
+    }
+  </span>
+</a>
+
+<button
+  type="button"
+  class="add-btn"
+  [disabled]="!canAddToCart"
+  (click)="onAddToCart()"
+>
+  {{ isUnavailable ? 'Nedostupno' : (product.priceOnRequest ? 'Pozovite nas' : 'Dodaj u korpu') }}
+</button>

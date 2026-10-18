@@ -1,0 +1,2 @@
+export const CONTACT_PHONE_DISPLAY = '+387 61 693 222';
+export const CONTACT_PHONE_HREF = 'tel:+38761693222';

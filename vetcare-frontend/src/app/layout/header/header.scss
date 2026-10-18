@@ -1,12 +1,4 @@
 :host {
-  /* display: contents (not block) is required here: a sticky element can
-     never stick further than its own containing block's bounds, and the
-     containing block for position:sticky descendants is this host element.
-     If the host generated its own (tightly content-sized, ~107px) box, the
-     sticky utilbar/header would "run out of room" and unstick almost
-     immediately on scroll. `contents` removes the host from the box tree
-     so the containing block becomes app-root instead, which spans the
-     full page. */
   display: contents;
 }
 
@@ -16,14 +8,11 @@
   padding: 0 28px;
 }
 
-/* ================= UTILITY BAR ================= */
 .utilbar {
   background: var(--forest-950);
   border-bottom: 1px solid rgba(226, 198, 108, 0.12);
   z-index: 62;
 
-  /* Sticky together with the header + category nav, but only on desktop -
-     on mobile it scrolls away and only the header row itself stays fixed. */
   @media (min-width: 921px) {
     position: sticky;
     top: 0;
@@ -58,15 +47,12 @@
   }
 }
 
-/* ================= HEADER ================= */
 header {
   position: sticky;
   top: 0;
   z-index: 61;
   background: var(--forest-800);
 
-  /* Stack below the sticky utility bar on desktop, where the utility bar
-     is also sticky (see .utilbar above). */
   @media (min-width: 921px) {
     top: var(--utilbar-height);
   }
@@ -76,10 +62,6 @@ header {
   display: flex;
   align-items: center;
   gap: 28px;
-  /* Longhand on purpose: this element also has the .wrap class, which sets
-     the horizontal padding (28px) for edge spacing on mobile. A shorthand
-     `padding: 16px 0` here would win the cascade (same specificity, later
-     in source order) and silently zero that horizontal padding out. */
   padding-top: 16px;
   padding-bottom: 16px;
 }
@@ -127,7 +109,7 @@ header {
 
   input {
     width: 100%;
-    padding: 11px 42px 11px 16px;
+    padding: 11px 46px 11px 16px;
     border: 1px solid var(--forest-600);
     border-radius: 999px;
     background: var(--forest-700);
@@ -145,16 +127,29 @@ header {
     }
   }
 
-  svg {
+  .search-submit {
     position: absolute;
-    right: 14px;
+    right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    stroke: var(--gold-300);
-    fill: none;
-    pointer-events: none;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.15s;
+
+    &:hover {
+      background: rgba(226, 198, 108, 0.14);
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold-300);
+      fill: none;
+    }
   }
 
   @media (max-width: 920px) {

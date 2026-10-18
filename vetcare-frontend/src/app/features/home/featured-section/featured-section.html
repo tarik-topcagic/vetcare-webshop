@@ -1,0 +1,18 @@
+@if (items().length > 0) {
+  <section class="featured-section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Naš izbor</p>
+        <h2>Izdvojeno</h2>
+        <a class="see-all" routerLink="/proizvodi">Pogledaj sve →</a>
+      </div>
+      <ul class="grid">
+        @for (item of items(); track item.id; let i = $index) {
+          <li>
+            <app-product-card [product]="item" [imgPriority]="i < 4" />
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+}

@@ -1,0 +1,23 @@
+$photo-ratio: 1; 
+
+$mobile-breakpoint: 600px;
+$photo-ratio-mobile: 1.3333; 
+$photo-max-height-mobile: 240px;
+
+$wide-breakpoint: 900px;
+
+$name-font-size: 13.5px;
+$name-line-height: 1.35;
+$name-lines-narrow: 2;
+$name-lines-wide: 3;
+
+$name-single-line: $name-font-size * $name-line-height;
+$name-min-height-narrow: $name-single-line * $name-lines-narrow;
+$name-min-height-wide: $name-single-line * $name-lines-wide;
+
+$brand-min-height: 14px;
+$badge-min-height: 22px;
+$stock-min-height: 16px;
+
+$price-min-height: 34px;
+$btn-min-height: 40px;
