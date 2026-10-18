@@ -10,9 +10,6 @@ public static class ProductEndpoints
     private const int DefaultPageSize = 24;
     private const int MaxPageSize = 60;
 
-    /// <summary>Raw columns pulled out of SQL for one product card (list item or
-    /// related item). Mapped to a public DTO in memory via ISalePricingService
-    /// so the sale rule is applied in exactly one place.</summary>
     private sealed record ProductCardRow(
         int Id,
         string Name,
@@ -45,6 +42,7 @@ public static class ProductEndpoints
         decimal? minPrice,
         decimal? maxPrice,
         string? sort,
+        bool featured = false,
         int page = 1,
         int pageSize = DefaultPageSize)
     {
@@ -74,7 +72,6 @@ public static class ProductEndpoints
             var categoryExists = await db.Categories.AnyAsync(c => c.Slug == normalizedCategory);
             if (!categoryExists)
             {
-                // Unknown category slug: empty result, not a 500.
                 return Results.Ok(new PagedResult<ProductListItemDto>([], 0, page, pageSize));
             }
 
@@ -86,6 +83,11 @@ public static class ProductEndpoints
             query = query.Where(p =>
                 EF.Functions.ILike(p.Name, $"%{q}%")
                 || (p.Brand != null && EF.Functions.ILike(p.Brand, $"%{q}%")));
+        }
+
+        if (featured)
+        {
+            query = query.Where(p => p.IsFeatured);
         }
 
         if (minPrice is not null)
@@ -100,16 +102,15 @@ public static class ProductEndpoints
 
         var totalCount = await query.CountAsync();
 
-        // Available products always sort before "Nedostupno" ones, regardless
-        // of the chosen sort - applied as the primary sort key.
         var ordered = query.OrderBy(p => p.StockStatus == Models.StockStatus.Nedostupno ? 1 : 0);
 
         ordered = (sort?.Trim().ToLowerInvariant()) switch
         {
             "name" => ordered.ThenBy(p => p.Name),
+            "name-desc" => ordered.ThenByDescending(p => p.Name),
             "price-asc" => ordered.ThenBy(p => p.Price),
             "price-desc" => ordered.ThenByDescending(p => p.Price),
-            _ => ordered.ThenByDescending(p => p.CreatedAt), // "newest" and default
+            _ => ordered.ThenByDescending(p => p.CreatedAt),
         };
 
         var rows = await ordered
