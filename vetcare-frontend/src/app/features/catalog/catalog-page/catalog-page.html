@@ -56,11 +56,11 @@
 
     @if (totalPages() > 1) {
       <nav class="pagination" aria-label="Stranice">
-        <button type="button" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() <= 1">
+        <button type="button" class="pager-btn" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() <= 1">
           ← Prethodna
         </button>
         <span>Stranica {{ currentPage() }} od {{ totalPages() }}</span>
-        <button type="button" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() >= totalPages()">
+        <button type="button" class="pager-btn" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() >= totalPages()">
           Sljedeća →
         </button>
       </nav>

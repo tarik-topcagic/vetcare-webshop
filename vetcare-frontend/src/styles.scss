@@ -1,12 +1,9 @@
-/* Design tokens ported from vetcare-webshop.html (the approved design system). */
 :root {
   --forest-950: #0a2015;
   --forest-800: #123726;
   --forest-700: #1b4a34;
   --forest-600: #245c41;
   --gold-600: #a8811d;
-  /* Darker than --gold-600 specifically for small text on light (cream)
-     backgrounds - --gold-600 only reaches ~3.4:1 there, below WCAG AA. */
   --gold-700: #7a5c14;
   --gold-500: #c9a227;
   --gold-300: #e2c66c;
@@ -18,10 +15,6 @@
   --radius: 2px;
   --radius-control: 13px;
   --sale: #a8432c;
-
-  /* Measured rendered heights of the sticky header bars, used to stack
-     them without overlap (see layout/header and layout/category-nav).
-     Re-measure and update these if either bar's content/padding changes. */
   --utilbar-height: 31px;
   --header-height: 76px;
 }
@@ -96,4 +89,28 @@ ul {
   * {
     transition: none !important;
   }
+}
+
+.pager-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--forest-700);
+  border-radius: var(--radius-control);
+  color: var(--forest-800);
+  font-size: 13.5px;
+  font-weight: 600;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.pager-btn:hover:not(:disabled) {
+  background: var(--cream-100);
+  border-color: var(--gold-600);
+}
+
+.pager-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
