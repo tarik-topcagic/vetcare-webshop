@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,9 @@ using Microsoft.Net.Http.Headers;
 using VetCare.Api.Data;
 using VetCare.Api.Endpoints;
 using VetCare.Api.Services;
+
+static bool HasContentHash(string fileName) =>
+    Regex.IsMatch(fileName, @"-[0-9a-zA-Z]{8,}\.[^.]+$");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,21 +52,13 @@ app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>
     {
-        // index.html must always be revalidated so a new deploy's hashed
-        // bundle references are picked up; the hashed JS/CSS/asset files
-        // themselves are safe to cache for a long time since their
-        // filenames change whenever their content does.
         var headers = ctx.Context.Response.GetTypedHeaders();
-        headers.CacheControl = ctx.File.Name.Equals("index.html", StringComparison.OrdinalIgnoreCase)
+        headers.CacheControl = app.Environment.IsDevelopment() || !HasContentHash(ctx.File.Name)
             ? new CacheControlHeaderValue { NoCache = true }
             : new CacheControlHeaderValue { Public = true, MaxAge = TimeSpan.FromDays(365), Extensions = { new NameValueHeaderValue("immutable") } };
     },
 });
 
-// Product photos. Deliberately NOT under wwwroot: `ng build` wipes wwwroot's
-// contents on every deploy, which would delete these. The folder path is
-// configurable (ProductImages:Path / PRODUCTIMAGES__PATH) so production can
-// point it at a persistent disk instead of the app's own directory.
 var productImagesPath = Path.GetFullPath(Path.Combine(
     app.Environment.ContentRootPath,
     builder.Configuration["ProductImages:Path"] ?? "product-images"));
@@ -73,8 +69,6 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/product-images",
     OnPrepareResponse = ctx =>
     {
-        // Filenames are content-derived (<slug>-<n>.webp) and never reused
-        // for different content, so these are safe to cache indefinitely.
         var headers = ctx.Context.Response.GetTypedHeaders();
         headers.CacheControl = new CacheControlHeaderValue
         {
@@ -107,8 +101,6 @@ app.MapGet("/api/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
-// SPA fallback: serve index.html for any route that isn't an API route,
-// so client-side (Angular) routes still work on a hard refresh/deep link.
 app.MapFallback(async context =>
 {
     if (context.Request.Path.StartsWithSegments("/api"))
