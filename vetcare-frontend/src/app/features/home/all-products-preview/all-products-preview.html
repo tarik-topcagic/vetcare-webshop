@@ -1,0 +1,38 @@
+@if (items() === null) {
+  <section class="all-products-section">
+    <div class="wrap">
+      <h2>Svi proizvodi</h2>
+      <ul class="grid" aria-busy="true" aria-label="Učitavanje proizvoda">
+        @for (_ of skeletonRows; track $index) {
+          <li class="skeleton-card" aria-hidden="true">
+            <span class="sk-body">
+              <span class="sk-photo"></span>
+              <span class="sk-block sk-brand"></span>
+              <span class="sk-block sk-name"></span>
+              <span class="sk-block sk-badge"></span>
+              <span class="sk-block sk-stock"></span>
+              <span class="sk-block sk-price"></span>
+            </span>
+            <span class="sk-btn"></span>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+} @else if (items()!.length > 0) {
+  <section class="all-products-section">
+    <div class="wrap">
+      <h2>Svi proizvodi</h2>
+      <ul class="grid">
+        @for (item of items()!; track item.id) {
+          <li>
+            <app-product-card [product]="item" />
+          </li>
+        }
+      </ul>
+      <div class="more-row">
+        <a class="pager-btn" routerLink="/proizvodi" aria-label="Vidi više proizvoda">Vidi više</a>
+      </div>
+    </div>
+  </section>
+}

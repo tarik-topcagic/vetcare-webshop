@@ -3,6 +3,7 @@ import { HomeHeroComponent } from '../home-hero/home-hero';
 import { TrustStripComponent } from '../trust-strip/trust-strip';
 import { SaleSectionComponent } from '../sale-section/sale-section';
 import { FeaturedSectionComponent } from '../featured-section/featured-section';
+import { AllProductsPreviewComponent } from '../all-products-preview/all-products-preview';
 import { AboutBandComponent } from '../about-band/about-band';
 
 @Component({
@@ -12,6 +13,7 @@ import { AboutBandComponent } from '../about-band/about-band';
     TrustStripComponent,
     SaleSectionComponent,
     FeaturedSectionComponent,
+    AllProductsPreviewComponent,
     AboutBandComponent,
   ],
   templateUrl: './home.html',
