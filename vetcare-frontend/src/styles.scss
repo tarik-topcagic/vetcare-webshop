@@ -94,6 +94,26 @@ ul {
   }
 }
 
+.grid.reveal > li,
+li.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 600ms ease-out, transform 600ms ease-out;
+}
+
+.grid.reveal.revealed > li,
+li.reveal.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid.reveal > li,
+  li.reveal {
+    transform: none;
+  }
+}
+
 @keyframes hero-pop-in {
   from {
     opacity: 0;

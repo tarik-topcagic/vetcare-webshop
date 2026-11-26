@@ -23,9 +23,9 @@
   <section class="all-products-section">
     <div class="wrap">
       <h2>Svi proizvodi</h2>
-      <ul class="grid">
+      <ul class="grid" [appRevealOnScroll]="!isMobile()">
         @for (item of items()!; track item.id) {
-          <li>
+          <li [appRevealOnScroll]="isMobile()">
             <app-product-card [product]="item" />
           </li>
         }
