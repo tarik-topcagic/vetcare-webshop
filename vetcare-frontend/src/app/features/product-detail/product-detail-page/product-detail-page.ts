@@ -1,4 +1,4 @@
-import { Component, Input, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, Input, computed, inject, signal } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 import { ProductDetail, RelatedProduct } from '../../../core/models/product';
@@ -6,12 +6,13 @@ import { CartService } from '../../../core/services/cart.service';
 import { ProductService } from '../../../core/services/product.service';
 import { DescriptionComponent } from '../../../shared/components/description/description';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
+import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll/reveal-on-scroll';
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF } from '../../../shared/data/contact';
 import { formatPrice } from '../../../shared/utils/format-price';
 
 @Component({
   selector: 'app-product-detail-page',
-  imports: [RouterLink, ProductCardComponent, DescriptionComponent],
+  imports: [RouterLink, ProductCardComponent, DescriptionComponent, RevealOnScrollDirective],
   templateUrl: './product-detail-page.html',
   styleUrl: './product-detail-page.scss',
 })
@@ -27,9 +28,18 @@ export class ProductDetailPageComponent {
   protected readonly selectedImageIndex = signal(0);
   protected readonly addedToCart = signal(false);
 
+  private readonly mobileQuery = window.matchMedia('(max-width: 599px)');
+  protected readonly isMobile = signal(this.mobileQuery.matches);
+
   protected readonly phoneDisplay = CONTACT_PHONE_DISPLAY;
   protected readonly phoneHref = CONTACT_PHONE_HREF;
   protected readonly formatPrice = formatPrice;
+
+  constructor() {
+    const onChange = (event: MediaQueryListEvent) => this.isMobile.set(event.matches);
+    this.mobileQuery.addEventListener('change', onChange);
+    inject(DestroyRef).onDestroy(() => this.mobileQuery.removeEventListener('change', onChange));
+  }
 
   protected readonly sortedVariants = computed(() => {
     const p = this.product();
@@ -67,6 +77,7 @@ export class ProductDetailPageComponent {
   }
 
   private loadProduct(slug: string): void {
+    window.scrollTo(0, 0);
     this.loading.set(true);
     this.notFound.set(false);
     this.selectedImageIndex.set(0);

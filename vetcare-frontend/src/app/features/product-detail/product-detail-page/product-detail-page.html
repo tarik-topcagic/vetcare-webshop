@@ -23,7 +23,7 @@
       <span>{{ product()!.name }}</span>
     </nav>
 
-    <div class="detail-layout">
+    <div class="detail-layout pop-reveal" [appRevealOnScroll]="true">
       <div class="gallery">
         <div class="main-photo">
           @if (product()!.imageUrls.length > 0) {
@@ -100,7 +100,7 @@
         </button>
 
         @if (sortedVariants().length > 0) {
-          <div class="variants">
+          <div class="variants pop-reveal" [appRevealOnScroll]="true">
             <h2>Varijante</h2>
             <ul>
               @for (variant of sortedVariants(); track variant.slug) {
@@ -121,7 +121,7 @@
       </div>
     </div>
 
-    <section class="description-section">
+    <section class="description-section pop-reveal" [appRevealOnScroll]="true">
       <h2>Opis proizvoda</h2>
       <app-description [text]="product()!.description" />
     </section>
@@ -129,9 +129,9 @@
     @if (related().length > 0) {
       <section class="related-section">
         <h2>Slični proizvodi</h2>
-        <ul class="related-grid">
+        <ul class="related-grid grid" [appRevealOnScroll]="!isMobile()">
           @for (item of related(); track item.id) {
-            <li>
+            <li [appRevealOnScroll]="isMobile()">
               <app-product-card [product]="item" />
             </li>
           }
