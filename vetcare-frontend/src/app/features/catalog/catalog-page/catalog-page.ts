@@ -7,6 +7,7 @@ import { Category, PagedResult, ProductListItem, ProductQueryParams, ProductSort
 import { ProductService } from '../../../core/services/product.service';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card';
 import { SelectComponent, SelectOption } from '../../../shared/components/select/select';
+import { RevealOnScrollDirective } from '../../../shared/directives/reveal-on-scroll/reveal-on-scroll';
 
 const PAGE_SIZE = 24;
 
@@ -20,7 +21,7 @@ const SORT_OPTIONS: SelectOption[] = [
 
 @Component({
   selector: 'app-catalog-page',
-  imports: [ProductCardComponent, RouterLink, SelectComponent],
+  imports: [ProductCardComponent, RouterLink, SelectComponent, RevealOnScrollDirective],
   templateUrl: './catalog-page.html',
   styleUrl: './catalog-page.scss',
 })
