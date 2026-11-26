@@ -143,6 +143,26 @@ li.reveal.revealed {
   }
 }
 
+.pop-reveal.reveal {
+  opacity: 0;
+  transform: scale(var(--hero-pop-scale-from)) translateY(var(--hero-pop-shift));
+}
+
+.pop-reveal.reveal.revealed {
+  animation-name: hero-pop-in;
+  animation-duration: var(--hero-pop-duration);
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pop-reveal.reveal.revealed {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .pager-btn {
   display: inline-flex;
   align-items: center;
