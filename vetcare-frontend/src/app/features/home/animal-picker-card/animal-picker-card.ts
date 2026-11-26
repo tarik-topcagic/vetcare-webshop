@@ -10,6 +10,8 @@ export class AnimalPickerCardComponent {
   @Input({ required: true }) name!: string;
   @Input({ required: true }) slug!: string;
   @Input({ required: true }) image!: string;
+  @Input({ required: true }) image2x!: string;
+  @Input() priority = false;
 
   protected get href(): string {
     return categoryHref(this.slug);

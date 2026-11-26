@@ -1,0 +1,59 @@
+<div
+  class="carousel"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Odaberite životinju"
+>
+  <div
+    class="viewport"
+    #viewport
+    (pointerenter)="onPointerEnter()"
+    (pointerleave)="onPointerLeave()"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp()"
+    (pointercancel)="onPointerUp()"
+  >
+    <div
+      class="track"
+      [style.transform]="trackTransform()"
+      [style.transition]="trackTransition()"
+      [attr.aria-live]="autoplaying() ? 'off' : 'polite'"
+      aria-atomic="false"
+    >
+      @for (animal of renderAnimals; track $index; let i = $index) {
+        <div
+          class="slide"
+          role="group"
+          aria-roledescription="slide"
+          [attr.aria-label]="ariaLabelFor(i)"
+          [attr.inert]="isInteractive(i) ? null : ''"
+          (click)="onSlideClick($event)"
+        >
+          <app-animal-picker-card
+            [name]="animal.name"
+            [slug]="animal.slug"
+            [image]="animal.image"
+            [image2x]="animal.image2x"
+            [priority]="i === 1"
+          />
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="dots" role="group" aria-label="Izravan odabir životinje">
+    @for (animal of animals; track animal.slug; let i = $index) {
+      <button
+        type="button"
+        class="dot"
+        [class.active]="i === active()"
+        [attr.aria-current]="i === active() ? 'true' : null"
+        [attr.aria-label]="'Prikaži: ' + animal.name"
+        (click)="goTo(i)"
+      >
+        <span class="dot-mark"></span>
+      </button>
+    }
+  </div>
+</div>

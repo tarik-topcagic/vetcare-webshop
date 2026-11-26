@@ -1,7 +1,13 @@
 <ul class="animal-grid">
-  @for (animal of animals; track animal.slug) {
+  @for (animal of animals; track animal.slug; let i = $index) {
     <li>
-      <app-animal-picker-card [name]="animal.name" [slug]="animal.slug" [image]="animal.image" />
+      <app-animal-picker-card
+        [name]="animal.name"
+        [slug]="animal.slug"
+        [image]="animal.image"
+        [image2x]="animal.image2x"
+        [priority]="i === 0"
+      />
     </li>
   }
 </ul>

@@ -2,10 +2,13 @@
   <span class="photo">
     <img
       [src]="image"
+      [srcset]="image2x + ' 2x'"
       [alt]="name"
-      width="480"
-      height="480"
-      loading="eager"
+      width="320"
+      height="240"
+      draggable="false"
+      [attr.loading]="priority ? 'eager' : 'lazy'"
+      [attr.fetchpriority]="priority ? 'high' : null"
     >
   </span>
   <span class="name">{{ name }}</span>
