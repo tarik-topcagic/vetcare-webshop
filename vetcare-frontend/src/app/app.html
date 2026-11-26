@@ -2,7 +2,7 @@
 <app-category-nav />
 <app-mobile-drawer [open]="mobileMenuOpen()" (closed)="onDrawerClosed()" />
 
-<main>
+<main [class.reserve-space]="lazyRouteLoading()">
   <router-outlet />
 </main>
 

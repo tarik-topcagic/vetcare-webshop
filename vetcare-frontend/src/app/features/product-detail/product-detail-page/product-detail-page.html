@@ -1,6 +1,42 @@
 @if (loading()) {
-  <div class="wrap">
-    <p class="state-message">Učitavanje...</p>
+  <div class="wrap" aria-busy="true" aria-label="Učitavanje proizvoda">
+    <div class="sk-block sk-breadcrumb" aria-hidden="true"></div>
+
+    <div class="detail-layout" aria-hidden="true">
+      <div class="gallery">
+        <div class="main-photo sk-block"></div>
+      </div>
+
+      <div class="info">
+        <div class="sk-block sk-brand-ph"></div>
+        <div class="sk-block sk-title-ph"></div>
+        <div class="sk-block sk-badge-ph"></div>
+        <div class="sk-block sk-stock-ph"></div>
+        <div class="sk-block sk-price-ph"></div>
+        <div class="sk-block sk-btn-ph"></div>
+        <div class="sk-block sk-variants-ph"></div>
+      </div>
+    </div>
+
+    <section class="description-section" aria-hidden="true">
+      <div class="sk-block sk-h2-ph"></div>
+      <div class="sk-block sk-desc-ph"></div>
+    </section>
+
+    <section class="related-section" aria-hidden="true">
+      <div class="sk-block sk-h2-ph"></div>
+      <ul class="related-grid">
+        @for (_ of relatedSkeletonRows; track $index) {
+          <li class="rel-sk-card">
+            <span class="sk-block rel-sk-photo"></span>
+            <span class="sk-block rel-sk-brand"></span>
+            <span class="sk-block rel-sk-name"></span>
+            <span class="sk-block rel-sk-price"></span>
+            <span class="sk-block rel-sk-btn"></span>
+          </li>
+        }
+      </ul>
+    </section>
   </div>
 } @else if (notFound()) {
   <div class="wrap">
@@ -126,7 +162,22 @@
       <app-description [text]="product()!.description" />
     </section>
 
-    @if (related().length > 0) {
+    @if (relatedLoading()) {
+      <section class="related-section" aria-hidden="true">
+        <div class="sk-block sk-h2-ph"></div>
+        <ul class="related-grid">
+          @for (_ of relatedSkeletonRows; track $index) {
+            <li class="rel-sk-card">
+              <span class="sk-block rel-sk-photo"></span>
+              <span class="sk-block rel-sk-brand"></span>
+              <span class="sk-block rel-sk-name"></span>
+              <span class="sk-block rel-sk-price"></span>
+              <span class="sk-block rel-sk-btn"></span>
+            </li>
+          }
+        </ul>
+      </section>
+    } @else if (related().length > 0) {
       <section class="related-section">
         <h2>Slični proizvodi</h2>
         <ul class="related-grid grid" [appRevealOnScroll]="!isMobile()">

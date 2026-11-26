@@ -1,3 +1,5 @@
+@use '../../../shared/components/product-card/card-tokens' as t;
+
 :host {
   display: block;
 }
@@ -299,4 +301,128 @@ h1 {
   .related-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.sk-block {
+  display: block;
+  background: var(--cream-100);
+  border-radius: 4px;
+}
+
+.sk-breadcrumb {
+  height: 15px;
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+.sk-brand-ph {
+  height: 14px;
+  width: 35%;
+  margin-bottom: 6px;
+}
+
+.sk-title-ph {
+  height: 64px;
+  width: 85%;
+  margin-bottom: 10px;
+}
+
+.sk-badge-ph {
+  height: 20px;
+  width: 70px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.sk-stock-ph {
+  height: 15px;
+  width: 90px;
+  margin-bottom: 16px;
+}
+
+.sk-price-ph {
+  height: 38px;
+  width: 120px;
+  margin-bottom: 18px;
+}
+
+.sk-btn-ph {
+  min-height: 48px;
+  border-radius: var(--radius);
+}
+
+.sk-variants-ph {
+  height: 90px;
+  margin-top: 26px;
+}
+
+.sk-h2-ph {
+  height: 33px;
+  width: 200px;
+  margin-bottom: 16px;
+}
+
+.sk-desc-ph {
+  min-height: 1100px;
+}
+
+@media (min-width: 760px) {
+  .sk-desc-ph {
+    min-height: 850px;
+  }
+}
+
+.rel-sk-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-width: 0;
+  background: var(--cream-50);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  overflow: hidden;
+  padding: 10px 12px 12px;
+}
+
+.rel-sk-photo {
+  width: 100%;
+  aspect-ratio: #{t.$photo-ratio};
+  border-radius: max(0px, calc(var(--radius-control) - 10px));
+  margin-bottom: 10px;
+}
+
+@media (max-width: #{t.$mobile-breakpoint - 1px}) {
+  .rel-sk-photo {
+    aspect-ratio: #{t.$photo-ratio-mobile};
+    max-height: t.$photo-max-height-mobile;
+  }
+}
+
+.rel-sk-brand {
+  height: t.$brand-min-height;
+  width: 40%;
+  margin-bottom: 2px;
+}
+
+.rel-sk-name {
+  height: t.$name-min-height-narrow;
+  width: 90%;
+  margin-bottom: 6px;
+}
+
+@media (max-width: #{t.$mobile-breakpoint - 1px}), (min-width: t.$wide-breakpoint) {
+  .rel-sk-name {
+    height: t.$name-min-height-wide;
+  }
+}
+
+.rel-sk-price {
+  height: t.$price-min-height;
+  width: 50%;
+}
+
+.rel-sk-btn {
+  margin-top: auto;
+  min-height: t.$btn-min-height;
+  border-top: 1px solid var(--line);
 }

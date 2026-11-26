@@ -1,3 +1,14 @@
 :host {
   display: block;
 }
+
+main.reserve-space {
+  display: block;
+  min-height: calc(100vh - var(--utilbar-height) - var(--header-height));
+}
+
+@media (min-width: 921px) {
+  main.reserve-space {
+    min-height: calc(100vh - var(--utilbar-height) - var(--header-height) - var(--catnav-height));
+  }
+}

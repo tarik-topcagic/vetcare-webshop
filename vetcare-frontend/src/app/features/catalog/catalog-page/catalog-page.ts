@@ -32,7 +32,7 @@ export class CatalogPageComponent {
   private readonly titleService = inject(Title);
 
   protected readonly sortOptions = SORT_OPTIONS;
-  protected readonly skeletonRows = Array.from({ length: 12 });
+  protected readonly skeletonRows = Array.from({ length: PAGE_SIZE });
 
   protected readonly loading = signal(true);
   protected readonly errored = signal(false);

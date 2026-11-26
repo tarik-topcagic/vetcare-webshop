@@ -25,8 +25,11 @@ export class ProductDetailPageComponent {
   protected readonly notFound = signal(false);
   protected readonly product = signal<ProductDetail | null>(null);
   protected readonly related = signal<RelatedProduct[]>([]);
+  protected readonly relatedLoading = signal(true);
   protected readonly selectedImageIndex = signal(0);
   protected readonly addedToCart = signal(false);
+
+  protected readonly relatedSkeletonRows = Array.from({ length: 4 });
 
   private readonly mobileQuery = window.matchMedia('(max-width: 599px)');
   protected readonly isMobile = signal(this.mobileQuery.matches);
@@ -84,6 +87,7 @@ export class ProductDetailPageComponent {
     this.addedToCart.set(false);
     this.product.set(null);
     this.related.set([]);
+    this.relatedLoading.set(true);
 
     this.productService.getProduct(slug).subscribe({
       next: (p) => {
@@ -98,8 +102,12 @@ export class ProductDetailPageComponent {
     });
 
     this.productService.getRelated(slug).subscribe({
-      next: (r) => this.related.set(r),
+      next: (r) => {
+        this.related.set(r);
+        this.relatedLoading.set(false);
+      },
       error: () => {
+        this.relatedLoading.set(false);
       },
     });
   }

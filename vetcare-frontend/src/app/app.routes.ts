@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home/home';
 import { AboutPageComponent } from './features/about/about-page/about-page';
+import { ProductDetailPageComponent } from './features/product-detail/product-detail-page/product-detail-page';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'VetCare – Veterinarska apoteka' },
@@ -13,9 +14,6 @@ export const routes: Routes = [
   },
   {
     path: 'proizvodi/:slug',
-    loadComponent: () =>
-      import('./features/product-detail/product-detail-page/product-detail-page').then(
-        (m) => m.ProductDetailPageComponent,
-      ),
+    component: ProductDetailPageComponent,
   },
 ];
