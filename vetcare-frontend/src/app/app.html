@@ -1,6 +1,6 @@
-<app-header (menuToggle)="mobileMenuOpen.set(!mobileMenuOpen())" />
+<app-header [menuOpen]="mobileMenuOpen()" (menuToggle)="mobileMenuOpen.set(!mobileMenuOpen())" />
 <app-category-nav />
-<app-mobile-drawer [open]="mobileMenuOpen()" (closed)="mobileMenuOpen.set(false)" />
+<app-mobile-drawer [open]="mobileMenuOpen()" (closed)="onDrawerClosed()" />
 
 <main>
   <router-outlet />

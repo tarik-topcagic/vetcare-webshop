@@ -3,13 +3,23 @@
 }
 
 .mobile-drawer {
-  display: none;
   position: fixed;
   inset: 0;
   z-index: 99;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility 0s linear 300ms;
 
   &.open {
-    display: block;
+    visibility: visible;
+    pointer-events: auto;
+    transition: visibility 0s linear 0s;
+  }
+
+  &.no-transition,
+  &.no-transition .scrim,
+  &.no-transition .panel {
+    transition: none !important;
   }
 }
 
@@ -17,6 +27,13 @@
   position: absolute;
   inset: 0;
   background: rgba(10, 32, 21, 0.55);
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
+.mobile-drawer.open .scrim {
+  opacity: 1;
+  transition: opacity 300ms ease-out;
 }
 
 .panel {
@@ -29,6 +46,13 @@
   background: var(--forest-800);
   padding: 24px;
   overflow-y: auto;
+  transform: translate3d(-100%, 0, 0);
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-drawer.open .panel {
+  transform: translate3d(0, 0, 0);
+  transition: transform 380ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .close-btn {

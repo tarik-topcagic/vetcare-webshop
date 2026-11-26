@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart.service';
 import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF } from '../../shared/data/contact';
@@ -10,7 +10,10 @@ import { CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF } from '../../shared/data/con
   styleUrl: './header.scss',
 })
 export class HeaderComponent {
+  @Input() menuOpen = false;
   @Output() menuToggle = new EventEmitter<void>();
+
+  @ViewChild('burgerBtn') private burgerBtnRef!: ElementRef<HTMLButtonElement>;
 
   private readonly router = inject(Router);
   private readonly cartService = inject(CartService);
@@ -23,5 +26,9 @@ export class HeaderComponent {
     const q = input.value.trim();
     if (!q) return;
     this.router.navigate(['/proizvodi'], { queryParams: { q } });
+  }
+
+  focusBurger(): void {
+    this.burgerBtnRef.nativeElement.focus();
   }
 }
