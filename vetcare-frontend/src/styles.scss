@@ -17,6 +17,9 @@
   --sale: #a8432c;
   --utilbar-height: 31px;
   --header-height: 76px;
+  --hero-pop-duration: 900ms;
+  --hero-pop-scale-from: 0.97;
+  --hero-pop-shift: 10px;
 }
 
 * {
@@ -88,6 +91,35 @@ ul {
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
+  }
+}
+
+@keyframes hero-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(var(--hero-pop-scale-from)) translateY(var(--hero-pop-shift));
+  }
+
+  40% {
+    opacity: 0.5;
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.hero-pop-in {
+  animation-name: hero-pop-in;
+  animation-duration: var(--hero-pop-duration);
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation-fill-mode: both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pop-in {
+    animation: none;
   }
 }
 

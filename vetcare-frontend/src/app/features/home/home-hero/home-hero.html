@@ -1,11 +1,15 @@
 <section class="hero">
-  <div class="wrap">
+  <div class="wrap hero-pop-in">
     <div class="hero-head">
       <h1>Odaberite životinju</h1>
       <p>Brže do proizvoda koji vam treba.</p>
     </div>
 
-    <app-animal-picker-grid />
+    @if (isDesktop()) {
+      <app-animal-picker-grid />
+    } @else {
+      <app-animal-carousel [entranceDone]="entranceDone()" />
+    }
 
     <div class="hero-quick-search">
       <app-quick-search-row />
