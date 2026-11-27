@@ -24,6 +24,8 @@ function productSubtitle(p: ProductListItem): string {
 })
 export class SearchSuggestionsComponent {
   @Input() activeIndex = -1;
+  @Input() showHistory = true;
+  @Input() maxHeightVh = 60;
 
   @Output() readonly rowsChange = new EventEmitter<SuggestionRow[]>();
 
@@ -65,7 +67,7 @@ export class SearchSuggestionsComponent {
   protected readonly hasQuery = computed(() => this.queryInternal().trim().length > 0);
 
   protected readonly rows = computed<SuggestionRow[]>(() => {
-    if (!this.hasQuery()) return this.historyRows();
+    if (!this.hasQuery()) return this.showHistory ? this.historyRows() : [];
     return [...this.categoryRowsInternal(), ...this.productRows()].slice(0, 6);
   });
 
@@ -134,7 +136,7 @@ export class SearchSuggestionsComponent {
   }
 
   protected rowId(index: number): string {
-    return `mobile-search-option-${index}`;
+    return `search-option-${index}`;
   }
 
   protected onRowClick(row: SuggestionRow): void {

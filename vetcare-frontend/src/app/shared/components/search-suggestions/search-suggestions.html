@@ -1,5 +1,5 @@
 @if (hasQuery()) {
-  <div class="sg-panel">
+  <div class="sg-panel" [style.max-height.vh]="maxHeightVh">
     <div class="sg-header">
       <span class="sg-title">Rezultati pretrage</span>
       <a class="sg-viewall" [routerLink]="['/proizvodi']" [queryParams]="{ q: query }" (click)="onViewAllClick()">
@@ -8,18 +8,18 @@
     </div>
 
     @if (errored() && rows().length === 0) {
-      <div class="sg-empty" role="listbox" id="mobile-search-listbox">
+      <div class="sg-empty" role="listbox" id="search-listbox">
         <p>Došlo je do greške pri pretrazi.</p>
         <a [routerLink]="['/proizvodi']">Pogledaj sve proizvode</a>
       </div>
     } @else if (!loading() && rows().length === 0) {
-      <div class="sg-empty" role="listbox" id="mobile-search-listbox">
+      <div class="sg-empty" role="listbox" id="search-listbox">
         <p>Nema rezultata za „{{ query }}"</p>
         <a [routerLink]="['/proizvodi']">Pogledaj sve proizvode</a>
         <p class="sg-phone-hint">{{ phoneDisplay }}</p>
       </div>
     } @else {
-      <ul class="sg-list" role="listbox" id="mobile-search-listbox">
+      <ul class="sg-list" role="listbox" id="search-listbox">
         @for (row of rows(); track row.id; let i = $index) {
           <li [id]="rowId(i)" role="option" [attr.aria-selected]="i === activeIndex" [class.active]="i === activeIndex">
             <a
@@ -65,14 +65,14 @@
       </ul>
     }
   </div>
-} @else if (historyRows().length > 0) {
-  <div class="sg-panel">
+} @else if (showHistory && historyRows().length > 0) {
+  <div class="sg-panel" [style.max-height.vh]="maxHeightVh">
     <div class="sg-header">
       <span class="sg-title">Nedavne pretrage</span>
       <button type="button" class="sg-clearall" (click)="clearHistory()">Obriši sve</button>
     </div>
 
-    <ul class="sg-list" role="listbox" id="mobile-search-listbox">
+    <ul class="sg-list" role="listbox" id="search-listbox">
       @for (row of rows(); track row.id; let i = $index) {
         <li
           [id]="rowId(i)"

@@ -15,7 +15,7 @@
             type="search"
             role="combobox"
             [attr.aria-expanded]="rows().length > 0"
-            aria-controls="mobile-search-listbox"
+            aria-controls="search-listbox"
             aria-autocomplete="list"
             [attr.aria-activedescendant]="activeOptionId"
             placeholder="Pretražite proizvode…"
@@ -47,11 +47,13 @@
         </div>
 
         <div class="mbsearch-panel-anchor">
-          <app-search-suggestions
-            [query]="query()"
-            [activeIndex]="activeIndex()"
-            (rowsChange)="onRowsChange($event)"
-          />
+          @defer (when true) {
+            <app-search-suggestions
+              [query]="query()"
+              [activeIndex]="activeIndex()"
+              (rowsChange)="onRowsChange($event)"
+            />
+          }
         </div>
       </div>
     </div>

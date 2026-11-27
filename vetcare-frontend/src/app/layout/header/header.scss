@@ -163,6 +163,10 @@ header {
       outline: none;
       border-color: var(--gold-500);
     }
+
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
   }
 
   .search-submit {
@@ -193,6 +197,14 @@ header {
   @media (max-width: 920px) {
     display: none;
   }
+}
+
+.hs-panel-anchor {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(max(100%, 560px), calc(100vw - 32px));
+  z-index: 5;
 }
 
 .navactions {

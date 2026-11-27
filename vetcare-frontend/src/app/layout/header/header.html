@@ -43,14 +43,27 @@
       <span class="word"><b>VetCare</b><span>Veterinarska apoteka</span></span>
     </a>
 
-    <div class="searchwrap">
+    <div class="searchwrap" #searchwrapEl>
       <label class="visually-hidden" for="searchInput">Pretraži proizvode</label>
       <input
         type="search"
         id="searchInput"
         #searchBox
         placeholder="Pretraži proizvod, namjenu ili životinju..."
-        (keyup.enter)="onSearchSubmit(searchBox)"
+        role="combobox"
+        [attr.aria-expanded]="desktopRows().length > 0"
+        aria-controls="search-listbox"
+        aria-autocomplete="list"
+        [attr.aria-activedescendant]="desktopActiveOptionId"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        enterkeyhint="search"
+        inputmode="search"
+        (focus)="onDesktopFocus()"
+        (input)="onDesktopInput(searchBox.value)"
+        (keydown)="onDesktopKeydown($event, searchBox)"
       >
       <button type="button" class="search-submit" aria-label="Pretraži" (click)="onSearchSubmit(searchBox)">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true">
@@ -58,6 +71,22 @@
           <path d="M21 21l-4.3-4.3"/>
         </svg>
       </button>
+
+      @defer (when desktopInteracted(); prefetch on idle) {
+        @if (desktopPanelOpen()) {
+          <div class="hs-panel-anchor">
+            <app-search-suggestions
+              #desktopSuggestions
+              [query]="desktopQuery()"
+              [activeIndex]="desktopActiveIndex()"
+              [maxHeightVh]="70"
+              (rowsChange)="onDesktopRowsChange($event)"
+            />
+          </div>
+        }
+      }
+
+      <div class="visually-hidden" aria-live="polite">{{ desktopLiveMessage }}</div>
     </div>
 
     <div class="navactions">

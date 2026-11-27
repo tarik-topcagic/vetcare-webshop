@@ -139,7 +139,7 @@ export class MobileSearchComponent implements OnChanges {
   }
 
   protected get activeOptionId(): string | null {
-    return this.activeIndex() >= 0 ? `mobile-search-option-${this.activeIndex()}` : null;
+    return this.activeIndex() >= 0 ? `search-option-${this.activeIndex()}` : null;
   }
 
   protected get liveMessage(): string {
