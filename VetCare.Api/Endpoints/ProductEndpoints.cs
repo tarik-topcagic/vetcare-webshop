@@ -10,6 +10,13 @@ public static class ProductEndpoints
     private const int DefaultPageSize = 24;
     private const int MaxPageSize = 60;
 
+    private static string FoldDiacritics(string value) => value
+        .ToLowerInvariant()
+        .Replace("č", "c").Replace("ć", "c")
+        .Replace("š", "s")
+        .Replace("ž", "z")
+        .Replace("đ", "d");
+
     private sealed record ProductCardRow(
         int Id,
         string Name,
@@ -80,9 +87,12 @@ public static class ProductEndpoints
 
         if (!string.IsNullOrWhiteSpace(q))
         {
+            var foldedQuery = FoldDiacritics(q);
             query = query.Where(p =>
                 EF.Functions.ILike(p.Name, $"%{q}%")
-                || (p.Brand != null && EF.Functions.ILike(p.Brand, $"%{q}%")));
+                || (p.Brand != null && EF.Functions.ILike(p.Brand, $"%{q}%"))
+                || p.Name.ToLower().Replace("č", "c").Replace("ć", "c").Replace("š", "s").Replace("ž", "z").Replace("đ", "d").Contains(foldedQuery)
+                || (p.Brand != null && p.Brand.ToLower().Replace("č", "c").Replace("ć", "c").Replace("š", "s").Replace("ž", "z").Replace("đ", "d").Contains(foldedQuery)));
         }
 
         if (featured)
