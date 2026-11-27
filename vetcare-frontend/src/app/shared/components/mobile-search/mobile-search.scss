@@ -1,0 +1,152 @@
+:host {
+  display: block;
+}
+
+.mbsearch {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 250ms cubic-bezier(0.32, 0.72, 0, 1), opacity 250ms cubic-bezier(0.32, 0.72, 0, 1);
+
+  &.open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition-duration: 300ms;
+  }
+}
+
+.mbsearch-inner {
+  overflow: hidden;
+  min-height: 0;
+  min-width: 0;
+}
+
+.mbsearch.open .mbsearch-inner {
+  overflow: visible;
+}
+
+.mbsearch-wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 28px 16px;
+}
+
+.mbsearch-pill-anchor {
+  position: relative;
+}
+
+.mbsearch-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--cream-50);
+  padding: 0 6px 0 18px;
+  box-shadow: 0 6px 16px rgba(10, 32, 21, 0.14);
+}
+
+.mbsearch-search-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--forest-800);
+}
+
+.mbsearch-pill input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--ink);
+
+  &::placeholder {
+    color: var(--ink-soft);
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
+}
+
+.mbsearch-clear {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  border-radius: 50%;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: var(--ink);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--gold-500);
+    outline-offset: 2px;
+  }
+}
+
+.mbsearch-submit {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--forest-800);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 19px;
+    height: 19px;
+    color: var(--gold-500);
+  }
+
+  &:hover {
+    background: var(--forest-700);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--gold-500);
+    outline-offset: 2px;
+  }
+}
+
+.mbsearch-panel-anchor {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mbsearch {
+    transition: opacity 120ms linear;
+
+    &.open {
+      transition-duration: 120ms;
+    }
+  }
+}
+
+@media (min-width: 920px) {
+  :host {
+    display: none;
+  }
+}

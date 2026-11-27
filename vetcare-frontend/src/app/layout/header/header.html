@@ -1,6 +1,23 @@
 <div class="utilbar">
   <div class="wrap">
-    <span>Cazin · Dostava širom BiH</span>
+    <div class="u-left">
+      <button
+        #magnifierBtn
+        type="button"
+        class="mb-search-trigger"
+        aria-label="Pretraži proizvode"
+        aria-haspopup="true"
+        aria-controls="mobile-search-bar"
+        [attr.aria-expanded]="searchOpen"
+        (click)="onMagnifierClick()"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/>
+          <path d="M21 21l-4.3-4.3"/>
+        </svg>
+      </button>
+      <span>Cazin · Dostava širom BiH</span>
+    </div>
     <div class="u-links">
       <a [href]="phoneHref">{{ phoneDisplay }}</a>
       <a href="mailto:vetcare.ba@gmail.com">vetcare.ba@gmail.com</a>
@@ -72,4 +89,12 @@
       </button>
     </div>
   </div>
+
+  @defer (on interaction(magnifierBtn); prefetch on idle) {
+    <app-mobile-search
+      id="mobile-search-bar"
+      [open]="searchOpen"
+      (closed)="onSearchClosedInternally()"
+    />
+  }
 </header>

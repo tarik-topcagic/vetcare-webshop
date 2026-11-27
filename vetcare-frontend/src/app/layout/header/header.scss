@@ -27,6 +27,44 @@
     color: rgba(241, 234, 217, 0.6);
   }
 
+  .u-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .mb-search-trigger {
+    display: none;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    margin-left: -12px;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream-50);
+    border-radius: var(--radius);
+
+    svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    &:hover {
+      color: var(--gold-300);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--gold-500);
+      outline-offset: -2px;
+    }
+  }
+
+  @media (max-width: 920px) {
+    .mb-search-trigger {
+      display: flex;
+    }
+  }
+
   a {
     transition: color 0.15s;
 

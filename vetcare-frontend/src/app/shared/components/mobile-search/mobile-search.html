@@ -1,0 +1,61 @@
+<div #root class="mbsearch" [class.open]="open">
+  <div class="mbsearch-inner">
+    <div class="mbsearch-wrap">
+      <div class="mbsearch-pill-anchor">
+        <div class="mbsearch-pill">
+          <svg class="mbsearch-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="M21 21l-4.3-4.3"/>
+          </svg>
+
+          <label class="visually-hidden" for="mobileSearchInput">Pretraži proizvode</label>
+          <input
+            #searchInput
+            id="mobileSearchInput"
+            type="search"
+            role="combobox"
+            [attr.aria-expanded]="rows().length > 0"
+            aria-controls="mobile-search-listbox"
+            aria-autocomplete="list"
+            [attr.aria-activedescendant]="activeOptionId"
+            placeholder="Pretražite proizvode…"
+            enterkeyhint="search"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+            inputmode="search"
+            [value]="query()"
+            (input)="onInput($any($event.target).value)"
+            (keydown)="onInputKeydown($event)"
+          >
+
+          <button type="button" class="mbsearch-clear" aria-label="Obriši pretragu" (click)="onClear()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+
+          @if (query().trim().length > 0) {
+            <button type="button" class="mbsearch-submit" aria-label="Pretraži" (click)="submit()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="M21 21l-4.3-4.3"/>
+              </svg>
+            </button>
+          }
+        </div>
+
+        <div class="mbsearch-panel-anchor">
+          <app-search-suggestions
+            [query]="query()"
+            [activeIndex]="activeIndex()"
+            (rowsChange)="onRowsChange($event)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="visually-hidden" aria-live="polite">{{ liveMessage }}</div>
+</div>

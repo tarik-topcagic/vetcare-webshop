@@ -19,6 +19,7 @@ export class App {
   private readonly router = inject(Router);
 
   protected readonly mobileMenuOpen = signal(false);
+  protected readonly mobileSearchOpen = signal(false);
   protected readonly lazyRouteLoading = signal(false);
 
   constructor() {
@@ -29,6 +30,22 @@ export class App {
         this.lazyRouteLoading.set(false);
       }
     });
+  }
+
+  protected onMenuToggle(): void {
+    const next = !this.mobileMenuOpen();
+    this.mobileMenuOpen.set(next);
+    if (next) {
+      this.mobileSearchOpen.set(false);
+    }
+  }
+
+  protected onSearchToggle(): void {
+    const next = !this.mobileSearchOpen();
+    this.mobileSearchOpen.set(next);
+    if (next) {
+      this.mobileMenuOpen.set(false);
+    }
   }
 
   protected onDrawerClosed(): void {

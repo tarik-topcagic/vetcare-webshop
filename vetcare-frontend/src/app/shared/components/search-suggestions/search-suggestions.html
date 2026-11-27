@@ -1,0 +1,113 @@
+@if (hasQuery()) {
+  <div class="sg-panel">
+    <div class="sg-header">
+      <span class="sg-title">Rezultati pretrage</span>
+      <a class="sg-viewall" [routerLink]="['/proizvodi']" [queryParams]="{ q: query }" (click)="onViewAllClick()">
+        Pogledaj sve →
+      </a>
+    </div>
+
+    @if (errored() && rows().length === 0) {
+      <div class="sg-empty" role="listbox" id="mobile-search-listbox">
+        <p>Došlo je do greške pri pretrazi.</p>
+        <a [routerLink]="['/proizvodi']">Pogledaj sve proizvode</a>
+      </div>
+    } @else if (!loading() && rows().length === 0) {
+      <div class="sg-empty" role="listbox" id="mobile-search-listbox">
+        <p>Nema rezultata za „{{ query }}"</p>
+        <a [routerLink]="['/proizvodi']">Pogledaj sve proizvode</a>
+        <p class="sg-phone-hint">{{ phoneDisplay }}</p>
+      </div>
+    } @else {
+      <ul class="sg-list" role="listbox" id="mobile-search-listbox">
+        @for (row of rows(); track row.id; let i = $index) {
+          <li [id]="rowId(i)" role="option" [attr.aria-selected]="i === activeIndex" [class.active]="i === activeIndex">
+            <a
+              class="sg-row"
+              [routerLink]="row.routerLink"
+              [queryParams]="row.queryParams ?? null"
+              (click)="onRowClick(row)"
+              tabindex="-1"
+            >
+              <span class="sg-thumb">
+                @if (row.thumbnail) {
+                  <img [src]="row.thumbnail" alt="" width="64" height="64">
+                } @else if (row.icon) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <rect x="3" y="3" width="18" height="18" rx="4"/>
+                    <path d="M8 12h8M12 8v8"/>
+                  </svg>
+                }
+              </span>
+              <span class="sg-text">
+                <span class="sg-row-title">{{ row.title }}</span>
+                @if (row.subtitle) {
+                  <span class="sg-subtitle">{{ row.subtitle }}</span>
+                }
+              </span>
+              <svg class="sg-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 6l6 6-6 6"/>
+              </svg>
+            </a>
+          </li>
+        }
+        @if (loading()) {
+          @for (_ of [1, 2, 3]; track $index) {
+            <li class="sg-skeleton" aria-hidden="true">
+              <span class="sg-thumb sg-thumb-sk"></span>
+              <span class="sg-text">
+                <span class="sg-sk-line"></span>
+                <span class="sg-sk-line short"></span>
+              </span>
+            </li>
+          }
+        }
+      </ul>
+    }
+  </div>
+} @else if (historyRows().length > 0) {
+  <div class="sg-panel">
+    <div class="sg-header">
+      <span class="sg-title">Nedavne pretrage</span>
+      <button type="button" class="sg-clearall" (click)="clearHistory()">Obriši sve</button>
+    </div>
+
+    <ul class="sg-list" role="listbox" id="mobile-search-listbox">
+      @for (row of rows(); track row.id; let i = $index) {
+        <li
+          [id]="rowId(i)"
+          role="option"
+          [attr.aria-selected]="i === activeIndex"
+          [class.active]="i === activeIndex"
+          class="sg-history-row"
+        >
+          <a
+            class="sg-row sg-history-main"
+            [routerLink]="row.routerLink"
+            [queryParams]="row.queryParams ?? null"
+            (click)="onRowClick(row)"
+            tabindex="-1"
+          >
+            <svg class="sg-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v5l3 3"/>
+            </svg>
+            <span class="sg-text">
+              <span class="sg-row-title">{{ row.title }}</span>
+            </span>
+          </a>
+          <button
+            type="button"
+            class="sg-remove"
+            [attr.aria-label]="'Ukloni ' + row.title + ' iz historije'"
+            (click)="removeHistoryItem(row.title, $event)"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+}

@@ -1,4 +1,10 @@
-<app-header [menuOpen]="mobileMenuOpen()" (menuToggle)="mobileMenuOpen.set(!mobileMenuOpen())" />
+<app-header
+  [menuOpen]="mobileMenuOpen()"
+  [searchOpen]="mobileSearchOpen()"
+  (menuToggle)="onMenuToggle()"
+  (searchToggle)="onSearchToggle()"
+  (searchClosed)="mobileSearchOpen.set(false)"
+/>
 <app-category-nav />
 <app-mobile-drawer [open]="mobileMenuOpen()" (closed)="onDrawerClosed()" />
 
